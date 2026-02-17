@@ -1,0 +1,11 @@
+# User-specific files
+.vs/
+.vscode/
+
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# SQL databases (keep them local)
+*.db
+*.sqlite
