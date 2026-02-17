@@ -35,13 +35,23 @@ The solution is divided into four main modules:
     ```bash
     git clone [https://github.com/laurafrnt/Employee-Directory-System.git](https://github.com/laurafrnt/Employee-Directory-System.git)
     ```
-2.  **Database Migration:**
-    Navigate to the API folder and apply migrations to generate the local SQLite database:
+2.  **Database Initialization**
+    This project uses SQLite. You must apply migrations to create the local database schema. Navigate to the API directory
+    and run:
     ```bash
     cd ANNUAIRE/API
     dotnet ef database update
     ```
-3.  **Run the API:**
+    Note: This creates the annuaire.db file within the API folder.
+    
+3. **Populating the Database (Seeding)**
+    To test the application with a realistic dataset, run the UtilitaireData project. It utilizes the Bogus library to inject 1000 randomized employees into your local database:
+    ```bash
+    cd ../UtilitaireData
+    dotnet run
+    ```
+
+4.  **Run the API:**
     ```bash
     dotnet run
     ```
@@ -59,4 +69,4 @@ Once the API is running, you can access the interactive documentation to test th
 * **Data Privacy:** Passwords are never stored in plain text, utilizing industry-standard hashing algorithms.
 
 ---
-*Developed as part of the Software Engineering curriculum at CESI Nanterre.*
+*Developed as part of CESI's two-year computer development study programme.*

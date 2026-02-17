@@ -8,12 +8,24 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppDbConte
     {
         var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
-        var config = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
-            .Build();
+        string startDirectory = Directory.GetCurrentDirectory();
+        DirectoryInfo directory = new DirectoryInfo(startDirectory);
 
-        optionsBuilder.UseSqlite(config.GetConnectionString("DefaultConnection"));
+        while (directory != null && !Directory.Exists(Path.Combine(directory.FullName, "API")))
+        {
+            directory = directory.Parent;
+        }
+
+        if (directory == null)
+        {
+            throw new Exception("Impossible de localiser le dossier racine du projet (API).");
+        }
+
+        string dbPath = Path.Combine(directory.FullName, "API", "annuaire.db");
+
+        Console.WriteLine($"[DEBUG] Final Database path: {dbPath}");
+
+        optionsBuilder.UseSqlite($"Data Source={dbPath}");
 
         return new AppDbContext(optionsBuilder.Options);
     }
